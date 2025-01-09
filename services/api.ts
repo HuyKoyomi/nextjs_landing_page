@@ -21,9 +21,9 @@ export const register = async (data: {
 
 export const login = async (data: { user_name: string; password: string }) => {
   try {
-    const response = await publicAPI.post("/api/v1/auth/login", data);
-    return response.data;
-    // return loginRes;
+    // const response = await publicAPI.post("/api/v1/auth/login", data);
+    // return response.data;
+    return loginRes;
   } catch (error) {
     console.error(error);
     throw error;
@@ -32,7 +32,7 @@ export const login = async (data: { user_name: string; password: string }) => {
 
 export const logout = async (data: string ) => {
   try {
-    const response = await axiosInstance.post("/api/v1/auth/login?sessionState=" +  data);
+    const response = await axiosInstance.post("/api/v1/auth/logout?sessionState=" +  data);
     return response.data;
   } catch (error) {
     console.error(error);
