@@ -20,8 +20,10 @@ export type Blog = {
 
 export type IBlog = {
   id: number | null;
-  title: string;
+  title: string | null;
   content: string | null;
   author: string | null;
-  mainImage: string;
+  mainImage: string |null;
+  type: string | null;
+  createdAt: string | null,
 };

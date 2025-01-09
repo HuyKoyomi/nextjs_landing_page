@@ -21,6 +21,7 @@ const BlogPage = () => {
           title: el?.title,
           content: el?.content,
           author: el?.author,
+          type: el?.type,
           mainImage: listImg[index % 4],
         }));
         setBlogList(tmp);
@@ -56,7 +57,7 @@ const BlogPage = () => {
           <div className="mb-4 mt-28 grid grid-cols-1 gap-7.5 md:grid-cols-2 lg:grid-cols-3 xl:gap-10">
             <button
               aria-label="signup with email and password"
-              className="w-44 inline-flex items-center gap-2.5 rounded-full bg-black px-6 py-3 font-medium text-white duration-300 ease-in-out hover:bg-blackho dark:bg-btndark dark:hover:bg-blackho"
+              className="inline-flex w-44 items-center gap-2.5 rounded-full bg-black px-6 py-3 font-medium text-white duration-300 ease-in-out hover:bg-blackho dark:bg-btndark dark:hover:bg-blackho"
               onClick={onCreate}
             >
               Create Post

@@ -21,18 +21,20 @@ export const register = async (data: {
 
 export const login = async (data: { user_name: string; password: string }) => {
   try {
-    // const response = await publicAPI.post("/api/v1/auth/login", data);
-    // return response.data;
-    return loginRes;
+    const response = await publicAPI.post("/api/v1/auth/login", data);
+    return response.data;
+    // return loginRes;
   } catch (error) {
     console.error(error);
     throw error;
   }
 };
 
-export const logout = async (data: string ) => {
+export const logout = async (data: string) => {
   try {
-    const response = await axiosInstance.post("/api/v1/auth/logout?sessionState=" +  data);
+    const response = await axiosInstance.post(
+      "/api/v1/auth/logout?sessionState=" + data,
+    );
     return response.data;
   } catch (error) {
     console.error(error);
@@ -45,6 +47,17 @@ export const getAllBlog = async () => {
     const response = await axiosInstance.get(
       "/api/v1/blogs?page=0&size=6&sortBy=createdAt&direction=desc",
     );
+    return response.data;
+    // return getAllBlogRes;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const getBlog = async (data: string | null) => {
+  try {
+    const response = await axiosInstance.get("/api/v1/blogs/" + data);
     return response.data;
     // return getAllBlogRes;
   } catch (error) {
@@ -68,9 +81,20 @@ export const createPost = async (data: {
   }
 };
 
-export const editPost = async () => {
+export const editPost = async (data: {
+  id: string | null;
+  title: string | null;
+  author: string | null;
+  content: string | null;
+  type: string | null;
+}) => {
   try {
-    const response = await axiosInstance.put("/api/v1/blogs");
+    const response = await axiosInstance.put("/api/v1/blogs/" + data.id, {
+      title: data.title,
+      author: data.author,
+      content: data.content,
+      type: data.type,
+    });
     return response.data;
     // return getAllBlogRes;
   } catch (error) {
@@ -81,7 +105,7 @@ export const editPost = async () => {
 
 export const deletePost = async (data: number) => {
   try {
-    const response = await axiosInstance.delete("/api/v1/blogs/6");
+    const response = await axiosInstance.delete("/api/v1/blogs/" + data);
     return response.data;
     // return getAllBlogRes;
   } catch (error) {

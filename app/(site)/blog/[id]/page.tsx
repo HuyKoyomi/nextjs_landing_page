@@ -1,15 +1,38 @@
+"use client";
+
 import RelatedPost from "@/components/Blog/RelatedPost";
 import SharePost from "@/components/Blog/SharePost";
-import { Metadata } from "next";
+import { getBlog } from "@/services/api";
+import { IBlog } from "@/types/blog";
+import dayjs from "dayjs";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
-export const metadata: Metadata = {
-  title: "Blog Details Page - Solid SaaS Boilerplate",
-  description: "This is Blog details page for Solid Pro",
-  // other metadata
-};
+const BlogDetailPage = ({ params }: { params: { id: string } }) => {
+  // const { id } = useParams();
+  const [post, setPost] = useState<IBlog>({
+    id: 5,
+    title: "My First Blog1",
+    content: "This is the content of my blog 2.",
+    author: "John Doe",
+    mainImage: null,
+    type: "Events",
+    createdAt: "2025-01-08T06:35:18.183596Z",
+  });
 
-const SingleBlogPage = async () => {
+  useEffect(() => {
+    const fetch = async () => {
+      const res = await getBlog(params.id);
+      const { code, data, message } = res;
+      if (code == 200 && data) {
+        setPost(data);
+      } else {
+        toast.error(message);
+      }
+    };
+    // fetch();
+  }, []);
   return (
     <>
       <section className="pb-20 pt-35 lg:pb-25 lg:pt-45 xl:pb-30 xl:pt-50">
@@ -88,47 +111,27 @@ const SingleBlogPage = async () => {
                 </div>
 
                 <h2 className="mb-5 mt-11 text-3xl font-semibold text-black dark:text-white 2xl:text-sectiontitle2">
-                  Kobe Steel plant that supplied
+                  {post?.title}
                 </h2>
 
                 <ul className="mb-9 flex flex-wrap gap-5 2xl:gap-7.5">
                   <li>
                     <span className="text-black dark:text-white">Author: </span>{" "}
-                    Jhon Doe
+                    {post?.author}
                   </li>
                   <li>
                     <span className="text-black dark:text-white">
-                      Published On: July 30, 2023
-                    </span>{" "}
-                  </li>
-                  <li>
-                    <span className="text-black dark:text-white">
-                      Category:
+                      Published On: {dayjs(post.createdAt).format("DD/MM/YYYY")}
                     </span>
-                    Events
+                  </li>
+                  <li>
+                    <span className="text-black dark:text-white">Type: </span>
+                    {post?.type}
                   </li>
                 </ul>
 
                 <div className="blog-details">
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Nunc quis nibh lorem. Duis sed odio lorem. In a efficitur
-                    leo. Ut venenatis rhoncus quam sed condimentum. Curabitur
-                    vel turpis in dolor volutpat imperdiet in ut mi. Integer non
-                    volutpat nulla. Nunc elementum elit viverra, tempus quam
-                    non, interdum ipsum.
-                  </p>
-
-                  <p>
-                    Aenean augue ex, condimentum vel metus vitae, aliquam porta
-                    elit. Quisque non metus ac orci mollis posuere. Mauris vel
-                    ipsum a diam interdum ultricies sed vitae neque. Nulla
-                    porttitor quam vitae pulvinar placerat. Nulla fringilla elit
-                    sit amet justo feugiat sodales. Morbi eleifend, enim non
-                    eleifend laoreet, odio libero lobortis lectus, non porttitor
-                    sem urna sit amet metus. In sollicitudin quam est,
-                    pellentesque consectetur felis fermentum vitae.
-                  </p>
+                  <p>{post?.content}</p>
 
                   <div className="flex flex-wrap gap-5">
                     <Image
@@ -169,4 +172,4 @@ const SingleBlogPage = async () => {
   );
 };
 
-export default SingleBlogPage;
+export default BlogDetailPage;
