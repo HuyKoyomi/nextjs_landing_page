@@ -23,6 +23,7 @@ const BlogPage = () => {
           author: el?.author,
           type: el?.type,
           mainImage: listImg[index % 4],
+          createdAt: el?.createdAt,
         }));
         setBlogList(tmp);
       } else {

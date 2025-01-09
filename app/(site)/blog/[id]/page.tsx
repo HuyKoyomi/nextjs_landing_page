@@ -6,11 +6,12 @@ import { getBlog } from "@/services/api";
 import { IBlog } from "@/types/blog";
 import dayjs from "dayjs";
 import Image from "next/image";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-const BlogDetailPage = ({ params }: { params: { id: string } }) => {
-  // const { id } = useParams();
+const BlogDetailPage = () => {
+  const { id } = useParams();
   const [post, setPost] = useState<IBlog>({
     id: 5,
     title: "My First Blog1",
@@ -23,15 +24,17 @@ const BlogDetailPage = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await getBlog(params.id);
-      const { code, data, message } = res;
-      if (code == 200 && data) {
-        setPost(data);
-      } else {
-        toast.error(message);
+      if (typeof id == "string") {
+        const res = await getBlog(id);
+        const { code, data, message } = res;
+        if (code == 200 && data) {
+          setPost(data);
+        } else {
+          toast.error(message);
+        }
       }
     };
-    // fetch();
+    fetch();
   }, []);
   return (
     <>

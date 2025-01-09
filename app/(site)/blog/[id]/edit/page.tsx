@@ -1,5 +1,5 @@
 "use client";
-import { createPost, editPost, getBlog } from "@/services/api";
+import { editPost, getBlog } from "@/services/api";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
@@ -9,7 +9,6 @@ import toast from "react-hot-toast";
 const BlogEditPage = () => {
   const router = useRouter(); // Khởi tạo router
   const { id } = useParams();
-  console.log(id);
   const [formInput, setFormInput] = useState({
     title: "",
     author: "",
@@ -146,6 +145,10 @@ const BlogEditPage = () => {
                   className="w-full border-b border-stroke bg-transparent pb-3.5 focus:border-waterloo focus:placeholder:text-black focus-visible:outline-none dark:border-strokedark dark:focus:border-manatee dark:focus:placeholder:text-white lg:w-1/2"
                 />
 
+                
+              </div>
+              <div className="row mb-7.5 flex gap-7.5 lg:mb-12.5 lg:flex-row lg:justify-between lg:gap-14">
+
                 <textarea
                   name="content"
                   // type="textarea"
@@ -157,7 +160,7 @@ const BlogEditPage = () => {
                       [e.target.name]: e.target.value,
                     })
                   }
-                  className="w-full border-b border-stroke bg-transparent pb-3.5 focus:border-waterloo focus:placeholder:text-black focus-visible:outline-none dark:border-strokedark dark:focus:border-manatee dark:focus:placeholder:text-white lg:w-1/2"
+                  className="w-full border-b border-stroke bg-transparent pb-3.5 focus:border-waterloo focus:placeholder:text-black focus-visible:outline-none dark:border-strokedark dark:focus:border-manatee dark:focus:placeholder:text-white"
                 />
               </div>
 
