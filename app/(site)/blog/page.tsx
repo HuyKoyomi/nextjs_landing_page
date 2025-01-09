@@ -2,6 +2,7 @@
 import BlogItem from "@/components/Blog/BlogItem";
 import { deletePost, getAllBlog } from "@/services/api";
 import { IBlog } from "@/types/blog";
+import { Pagination } from "antd";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -9,6 +10,8 @@ import toast from "react-hot-toast";
 const BlogPage = () => {
   const [blogList, setBlogList] = useState<IBlog[]>([]);
   const [dataSource, setDataSource] = useState<IBlog[]>([]);
+  const [pageCurrent, setPageCurrent] = useState<number>(1);
+  const [pageSize, setPageSize] = useState(6); // Số item mỗi trang
 
   const [reload, setReload] = useState<boolean>(false);
   const router = useRouter(); // Khởi tạo router
@@ -122,9 +125,24 @@ const BlogPage = () => {
           </div>
 
           <div className="grid grid-cols-1 gap-7.5 md:grid-cols-2 lg:grid-cols-3 xl:gap-10">
-            {dataSource.map((post, key) => (
-              <BlogItem key={key} blog={post} onDelete={onDelete} />
-            ))}
+            {dataSource
+              .slice((pageCurrent - 1) * pageSize, pageCurrent * pageSize)
+              .map((post, key) => (
+                <BlogItem key={key} blog={post} onDelete={onDelete} />
+              ))}
+          </div>
+
+          <div className="mt-8 flex justify-end">
+            <div />
+            <div />
+            <Pagination
+              current={pageCurrent}
+              pageSize={pageSize}
+              total={dataSource?.length || 0}
+              onChange={(e) => {
+                setPageCurrent(e);
+              }}
+            />
           </div>
         </div>
       </section>

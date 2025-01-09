@@ -44,11 +44,11 @@ export const logout = async (data: string) => {
 
 export const getAllBlog = async () => {
   try {
-    // const response = await axiosInstance.get(
-    //   "/api/v1/blogs?page=0&size=6&sortBy=createdAt&direction=desc",
-    // );
-    // return response.data;
-    return getAllBlogRes;
+    const response = await axiosInstance.get(
+      "/api/v1/blogs?page=0&size=6&sortBy=createdAt&direction=desc",
+    );
+    return response.data;
+    // return getAllBlogRes;
   } catch (error) {
     console.error(error);
     throw error;
